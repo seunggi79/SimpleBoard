@@ -12,4 +12,8 @@ public class PostController {
         this.postService = postService;
     }
 
+    @RequestMapping("")
+    public String main(){
+        return "posts";
+    }
 }
