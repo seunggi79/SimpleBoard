@@ -14,11 +14,13 @@ public class PostController {
         this.postService = postService;
     }
 
-    /*@RequestMapping("")
-    public String main(){
-        return "posts";
-    }*/
 
+    // 글 생성 (POST /posts)
+    @PostMapping
+    public Post create(@RequestParam String title,
+                       @RequestParam String content) {
+        return postService.create(title, content);
+    }
     @GetMapping("/new")
     public String newForm() {
         return "posts/new"; // templates/posts/new.html
