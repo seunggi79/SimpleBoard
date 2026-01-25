@@ -1,5 +1,6 @@
-package com.example.simple_boar.post;
+package com.example.simple_boar.post.reposiroty;
 
+import com.example.simple_boar.post.domain.Post;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class MemoryPostRepository implements PostRepository{
+public class MemoryPostRepository implements PostRepository {
 
 
     private final Map<Long, Post> store = new LinkedHashMap<>();

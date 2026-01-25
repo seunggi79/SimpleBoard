@@ -1,5 +1,7 @@
-package com.example.simple_boar.post;
+package com.example.simple_boar.post.service;
 
+import com.example.simple_boar.post.domain.Post;
+import com.example.simple_boar.post.reposiroty.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

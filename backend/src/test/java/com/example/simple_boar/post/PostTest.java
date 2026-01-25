@@ -1,5 +1,6 @@
 package com.example.simple_boar.post;
 
+import com.example.simple_boar.post.domain.Post;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

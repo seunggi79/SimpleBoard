@@ -1,5 +1,8 @@
-package com.example.simple_boar.post;
+package com.example.simple_boar.post.controller;
 
+import com.example.simple_boar.post.domain.Post;
+import com.example.simple_boar.post.dto.request.PostCreateRequest;
+import com.example.simple_boar.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +20,8 @@ public class PostController {
 
     // 글 생성 (POST /posts)
     @PostMapping
-    public Post create(@RequestParam String title,
-                       @RequestParam String content) {
-        return postService.create(title, content);
+    public Post create(@RequestBody PostCreateRequest req) {
+        return postService.create(req.getTitle(), req.getContent());
     }
     @GetMapping("/new")
     public String newForm() {

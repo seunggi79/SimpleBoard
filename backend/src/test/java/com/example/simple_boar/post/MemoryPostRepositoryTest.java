@@ -1,5 +1,7 @@
 package com.example.simple_boar.post;
 
+import com.example.simple_boar.post.domain.Post;
+import com.example.simple_boar.post.reposiroty.MemoryPostRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

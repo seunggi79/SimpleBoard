@@ -1,4 +1,6 @@
-package com.example.simple_boar.post;
+package com.example.simple_boar.post.reposiroty;
+
+import com.example.simple_boar.post.domain.Post;
 
 import java.util.List;
 
