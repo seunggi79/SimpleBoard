@@ -10,6 +10,14 @@ export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [selected, setSelected] = useState<Post | null>(null);
+
+  // 선택된 글 상세 보기
+  const loadDetail = async (id: number) => {
+    const res = await fetch(`/posts/${id}`);
+    const data: Post = await res.json();
+    setSelected(data);
+  };
 
   // 목록 불러오기: GET /posts
   const loadPosts = async () => {
@@ -32,7 +40,7 @@ export default function App() {
     await fetch("/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({title, content})
+      body: JSON.stringify({ title, content })
     });
 
     setTitle("");
@@ -66,11 +74,27 @@ export default function App() {
       <button onClick={loadPosts}>새로고침</button>
       <ul>
         {posts.map((p) => (
-          <li key={p.id}>
+          <li
+            key={p.id}
+            style={{ cursor: "pointer" }}
+            onClick={() => loadDetail(p.id)}
+          >
             #{p.id} {p.title}
           </li>
         ))}
       </ul>
+
+      {selected ? (
+        <div>
+          <h3>상세</h3>
+          <div>id: {selected.id}</div>
+          <div>title: {selected.title}</div>
+          <div>content: {selected.content}</div>
+        </div>
+      ) : (
+        <div>글을 클릭하면 상세가 보임</div>
+      )}
+
     </div>
   );
 }

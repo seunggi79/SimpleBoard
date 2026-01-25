@@ -23,6 +23,9 @@ public class PostController {
     public Post create(@RequestBody PostCreateRequest req) {
         return postService.create(req.getTitle(), req.getContent());
     }
+
+
+    // /new 글 생성
     @GetMapping("/new")
     public String newForm() {
         return "posts/new"; // templates/posts/new.html
@@ -32,14 +35,6 @@ public class PostController {
     public String createFromForm(@RequestParam String title, @RequestParam String content){
         postService.create(title, content);
         return "redirect:/posts";
-    }
-
-    @GetMapping("/init")
-    @ResponseBody
-    public String init(){
-        postService.create("첫 번째 글", "첫 번째 내용");
-        postService.create("두 번째 글", "두 번째 내용");
-        return "ok";
     }
 
     @GetMapping
