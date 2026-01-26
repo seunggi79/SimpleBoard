@@ -24,6 +24,10 @@ public class PostController {
         return postService.create(req.getTitle(), req.getContent());
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        postService.deleteById(id);
+    }
 
     // /new 글 생성
     @GetMapping("/new")
@@ -37,12 +41,14 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    // 목록 보기
     @GetMapping
     @ResponseBody
     public List<Post> list(){
         return postService.findAll();
     }
 
+    // 목록 상세
     @GetMapping("/{id}")
     @ResponseBody
     public Post detail(@PathVariable Long id){

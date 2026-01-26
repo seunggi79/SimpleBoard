@@ -48,6 +48,13 @@ export default function App() {
     loadPosts();
   };
 
+  // 글 삭제
+  const deletePost = async (id: number) => {
+    await fetch(`/posts/${id}`, { method: "DELETE" });
+    setSelected(null);
+    loadPosts();
+  };
+
   useEffect(() => {
     loadPosts();
   }, []);
@@ -90,6 +97,7 @@ export default function App() {
           <div>id: {selected.id}</div>
           <div>title: {selected.title}</div>
           <div>content: {selected.content}</div>
+          <button onClick={() => deletePost(selected.id)}>삭제</button>
         </div>
       ) : (
         <div>글을 클릭하면 상세가 보임</div>
