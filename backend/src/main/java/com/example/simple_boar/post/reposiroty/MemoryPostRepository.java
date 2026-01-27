@@ -1,7 +1,9 @@
 package com.example.simple_boar.post.reposiroty;
 
 import com.example.simple_boar.post.domain.Post;
+import com.example.simple_boar.post.dto.request.PostUpdateRequest;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -36,8 +38,22 @@ public class MemoryPostRepository implements PostRepository {
         return store.get(id);
     }
 
+    // 삭제
     @Override
     public void deleteById(Long id) {
         store.remove(id);
+    }
+    // 수정
+    @Override
+    public Post updateById(Long id, String title, String content){
+        Post post = store.get(id);
+        if (post == null){
+            return null; // 또는 예외 처리(추천)
+        }
+        post.setTitle(title);
+        post.setContent(content);
+
+        // 이미 store 안의 객체를 수정했기 때문에 put 다시 안 해도 됨
+        return post;
     }
 }

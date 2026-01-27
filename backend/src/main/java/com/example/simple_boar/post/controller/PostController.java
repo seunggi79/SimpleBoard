@@ -2,13 +2,15 @@ package com.example.simple_boar.post.controller;
 
 import com.example.simple_boar.post.domain.Post;
 import com.example.simple_boar.post.dto.request.PostCreateRequest;
+import com.example.simple_boar.post.dto.request.PostUpdateRequest;
+import com.example.simple_boar.post.dto.response.PostResponse;
 import com.example.simple_boar.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
@@ -23,10 +25,16 @@ public class PostController {
     public Post create(@RequestBody PostCreateRequest req) {
         return postService.create(req.getTitle(), req.getContent());
     }
-
+    // 글 삭제
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         postService.deleteById(id);
+    }
+    // 글 수정
+    @PutMapping("/{id}")
+    public PostResponse update(@PathVariable Long id, @RequestBody PostUpdateRequest req){
+        Post updated = postService.update(id, req.getTitle(), req.getContent());
+        return new PostResponse(updated.getId(), updated.getTitle(), updated.getContent());
     }
 
     // /new 글 생성
