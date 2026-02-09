@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: board-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: board
+      POSTGRES_USER: board_user
+      POSTGRES_PASSWORD: board_pw
+      TZ: Asia/Seoul
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
