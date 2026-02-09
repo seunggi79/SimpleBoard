@@ -1,4 +1,4 @@
-package com.example.simple_boar.post.dto.response;
+package com.example.simple_board.post.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

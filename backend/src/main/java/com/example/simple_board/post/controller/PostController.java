@@ -1,11 +1,10 @@
-package com.example.simple_boar.post.controller;
+package com.example.simple_board.post.controller;
 
-import com.example.simple_boar.post.domain.Post;
-import com.example.simple_boar.post.dto.request.PostCreateRequest;
-import com.example.simple_boar.post.dto.request.PostUpdateRequest;
-import com.example.simple_boar.post.dto.response.PostResponse;
-import com.example.simple_boar.post.service.PostService;
-import org.springframework.stereotype.Controller;
+import com.example.simple_board.post.domain.Post;
+import com.example.simple_board.post.dto.request.PostCreateRequest;
+import com.example.simple_board.post.dto.request.PostUpdateRequest;
+import com.example.simple_board.post.dto.response.PostResponse;
+import com.example.simple_board.post.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

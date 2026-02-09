@@ -1,4 +1,4 @@
-package com.example.simple_boar.post.domain;
+package com.example.simple_board.post.domain;
 
 import lombok.Data;
 

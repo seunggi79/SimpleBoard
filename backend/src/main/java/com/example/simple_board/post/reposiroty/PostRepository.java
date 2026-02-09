@@ -1,8 +1,6 @@
-package com.example.simple_boar.post.reposiroty;
+package com.example.simple_board.post.reposiroty;
 
-import com.example.simple_boar.post.domain.Post;
-import com.example.simple_boar.post.dto.request.PostUpdateRequest;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.example.simple_board.post.domain.Post;
 
 import java.util.List;
 

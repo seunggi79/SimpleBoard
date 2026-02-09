@@ -1,4 +1,4 @@
-package com.example.simple_boar.domain;
+package com.example.simple_board.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,17 +18,17 @@ public class Comment {
     private Long id;
 
     @Lob
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String content;
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private boolean isDeleted = false;
 
-    //@Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt; //= LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    //@Column(nullable = false)
-    private LocalDateTime updatedAt; //= LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,4 +38,17 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    //
+    @PrePersist
+    void prePersist() {
+        createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
+    }
+    //
+    @PreUpdate
+    void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }

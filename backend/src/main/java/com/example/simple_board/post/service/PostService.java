@@ -1,11 +1,9 @@
-package com.example.simple_boar.post.service;
+package com.example.simple_board.post.service;
 
-import com.example.simple_boar.post.domain.Post;
-import com.example.simple_boar.post.dto.request.PostUpdateRequest;
-import com.example.simple_boar.post.reposiroty.PostRepository;
+import com.example.simple_board.post.domain.Post;
+import com.example.simple_board.post.reposiroty.PostRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

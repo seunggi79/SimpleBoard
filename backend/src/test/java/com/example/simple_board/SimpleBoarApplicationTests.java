@@ -1,4 +1,4 @@
-package com.example.simple_boar;
+package com.example.simple_board;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
