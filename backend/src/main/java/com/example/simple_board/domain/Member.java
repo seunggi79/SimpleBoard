@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+//@Entity
 @Getter
 @Setter // 나중에 제거
 @Table(name = "members")
