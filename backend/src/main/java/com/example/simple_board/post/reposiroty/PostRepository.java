@@ -1,18 +1,12 @@
 package com.example.simple_board.post.reposiroty;
 
 import com.example.simple_board.post.domain.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface PostRepository {
-    Post save(Post post);
+public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAll();
-
-    Post findById(Long id);
-
-    void deleteById(Long id);
-
-    Post updateById(Long id, String title, String content);
 
 }
