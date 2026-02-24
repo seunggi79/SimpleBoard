@@ -17,10 +17,10 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member create(String email, String nickname){
+    /*public Member create(String email, String nickname){
         Member member = new Member(email, nickname);
         return memberRepository.save(member);
-    }
+    }*/
 
     public List<Member> findAll(){
         return memberRepository.findAll();
@@ -35,11 +35,11 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public Member update(Long id, String nickname){
+    /*public Member update(Long id, String nickname){
         Member member = findById(id);
         if (nickname != null){
             member.nickname = nickname;
         }
         return memberRepository.save(member);
-    }
+    }*/
 }

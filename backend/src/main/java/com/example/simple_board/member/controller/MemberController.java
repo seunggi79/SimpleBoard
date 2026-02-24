@@ -16,10 +16,10 @@ public class MemberController {
         this.repo = repo;
     }
 
-    @PostMapping
+    /*@PostMapping
     public Member create(@RequestBody Member m) {
         return repo.save(new Member(m.email, m.nickname));
-    }
+    }*/
 
     @GetMapping("/{id}")
     public Member get(@PathVariable Long id) {
@@ -31,12 +31,12 @@ public class MemberController {
         return repo.findAll();
     }
 
-    @PatchMapping("/{id}")
+    /*@PatchMapping("/{id}")
     public Member update(@PathVariable Long id, @RequestBody Member req) {
         Member m = repo.findById(id).orElseThrow();
         if (req.nickname != null) m.nickname = req.nickname;
         return repo.save(m);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
