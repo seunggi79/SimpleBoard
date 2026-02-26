@@ -11,10 +11,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // ✅ 개발 단계: POST 403( CSRF ) 방지
+                .csrf(csrf -> csrf.disable()) // 개발 단계: POST 403(CSRF) 방지
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // ✅ 회원가입/로그인 열기
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/posts/**").permitAll() // 게시판 API는 임시 공개
                         .anyRequest().authenticated()
                 )
 
