@@ -1,7 +1,49 @@
+.shell {
+  padding: 20px 16px 0;
+}
+
+.top-nav {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+}
+
+.nav-link {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  background: #fff;
+  padding: 8px 12px;
+}
+
+.nav-link.active {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+
 .board {
   max-width: 860px;
-  margin: 30px auto 60px;
-  padding: 0 16px;
+  margin: 14px auto 60px;
+  padding: 0;
+}
+
+.signup {
+  max-width: 640px;
+  margin: 14px auto 60px;
+}
+
+.signup-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.signup-header p {
+  margin: 8px 0 0;
+  color: #4b5563;
 }
 
 .board-header {
@@ -33,6 +75,11 @@
 .edit-box {
   display: grid;
   gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
 }
 
 input,
@@ -114,4 +161,8 @@ button:disabled {
 
 .error {
   color: #b91c1c;
+}
+
+.success {
+  color: #065f46;
 }

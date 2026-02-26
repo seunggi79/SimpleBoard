@@ -1,4 +1,4 @@
-import type { Post, PostWritePayload } from '../types/post'
+import type { Post, PostWritePayload } from '../model/types'
 
 async function parseError(res: Response) {
   const text = await res.text()

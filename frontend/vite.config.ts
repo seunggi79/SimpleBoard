@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       '/posts': { target: 'http://localhost:8080', changeOrigin: true },
       '/members': { target: 'http://localhost:8080', changeOrigin: true },
+      '/auth': { target: 'http://localhost:8080', changeOrigin: true },
     },
   },
 })

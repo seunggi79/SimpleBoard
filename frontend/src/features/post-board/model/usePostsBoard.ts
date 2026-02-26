@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { createPost, fetchPosts, removePost, updatePost } from '../api/posts'
-import type { Post } from '../types/post'
+import { createPost, fetchPosts, removePost, updatePost } from '../../../entities/post/api/posts'
+import type { Post } from '../../../entities/post/model/types'
 
 function getErrorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback

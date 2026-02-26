@@ -1,5 +1,5 @@
 import { PostListItem } from './PostListItem'
-import type { Post } from '../types/post'
+import type { Post } from '../../../entities/post/model/types'
 
 type PostListSectionProps = {
   posts: Post[]

@@ -1,5 +1,5 @@
-import { PostEditForm } from './PostEditForm'
-import type { Post } from '../types/post'
+import { PostEditForm } from '../../post-edit/ui/PostEditForm'
+import type { Post } from '../../../entities/post/model/types'
 
 type PostListItemProps = {
   post: Post

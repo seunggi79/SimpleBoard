@@ -1,65 +1,23 @@
 import './App.css'
-import { PostCreateForm } from './components/PostCreateForm'
-import { PostListSection } from './components/PostListSection'
-import { usePostsBoard } from './hooks/usePostsBoard'
+import { BoardPage } from './pages/BoardPage'
+import { SignupPage } from './pages/SignupPage'
 
 function App() {
-  const {
-    posts,
-    loading,
-    error,
-    title,
-    content,
-    submitting,
-    editingId,
-    editTitle,
-    editContent,
-    setTitle,
-    setContent,
-    setEditTitle,
-    setEditContent,
-    loadPosts,
-    onCreate,
-    startEdit,
-    cancelEdit,
-    onSaveEdit,
-    onDelete,
-  } = usePostsBoard()
+  const isSignupPath = window.location.pathname.startsWith('/signup')
 
   return (
-    <main className="board">
-      <header className="board-header">
-        <h1>게시판</h1>
-        <button className="ghost-btn" onClick={loadPosts} disabled={submitting}>
-          새로고침
-        </button>
-      </header>
+    <div className="shell">
+      <nav className="top-nav">
+        <a className={`nav-link ${!isSignupPath ? 'active' : ''}`} href="/">
+          게시판
+        </a>
+        <a className={`nav-link ${isSignupPath ? 'active' : ''}`} href="/signup">
+          회원가입
+        </a>
+      </nav>
 
-      <PostCreateForm
-        title={title}
-        content={content}
-        submitting={submitting}
-        onTitleChange={setTitle}
-        onContentChange={setContent}
-        onSubmit={onCreate}
-      />
-
-      <PostListSection
-        posts={posts}
-        loading={loading}
-        error={error}
-        editingId={editingId}
-        submitting={submitting}
-        editTitle={editTitle}
-        editContent={editContent}
-        onEditTitleChange={setEditTitle}
-        onEditContentChange={setEditContent}
-        onStartEdit={startEdit}
-        onSaveEdit={onSaveEdit}
-        onCancelEdit={cancelEdit}
-        onDelete={onDelete}
-      />
-    </main>
+      {isSignupPath ? <SignupPage /> : <BoardPage />}
+    </div>
   )
 }
 
