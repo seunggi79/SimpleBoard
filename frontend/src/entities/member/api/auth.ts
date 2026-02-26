@@ -1,4 +1,4 @@
-import type { SignupPayload, SignupResult } from '../model/types'
+import type { LoginPayload, LoginResult, SignupPayload, SignupResult } from '../model/types'
 
 async function parseError(res: Response) {
   const text = await res.text()
@@ -24,4 +24,15 @@ export async function signup(payload: SignupPayload) {
 
   if (!res.ok) throw new Error(await parseError(res))
   return (await res.json()) as SignupResult
+}
+
+export async function login(payload: LoginPayload) {
+  const res = await fetch('/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+
+  if (!res.ok) throw new Error(await parseError(res))
+  return (await res.json()) as LoginResult
 }

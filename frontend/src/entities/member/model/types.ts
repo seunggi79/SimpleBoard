@@ -9,3 +9,14 @@ export type SignupResult = {
   email: string
   nickname: string
 }
+
+export type LoginPayload = {
+  email: string
+  password: string
+}
+
+export type LoginResult = {
+  memberId: number
+  nickname: string
+  role: string
+}

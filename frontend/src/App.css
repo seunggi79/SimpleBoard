@@ -31,17 +31,20 @@
   padding: 0;
 }
 
-.signup {
+.signup,
+.login {
   max-width: 640px;
   margin: 14px auto 60px;
 }
 
-.signup-header h1 {
+.signup-header h1,
+.login-header h1 {
   margin: 0;
   font-size: 1.8rem;
 }
 
-.signup-header p {
+.signup-header p,
+.login-header p {
   margin: 8px 0 0;
   color: #4b5563;
 }
