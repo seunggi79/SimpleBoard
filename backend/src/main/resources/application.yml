@@ -12,3 +12,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+jwt:
+  secret: "dev-secret-please-change-1234567890abcdef"
+  access-token-exp-min: 30

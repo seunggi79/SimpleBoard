@@ -1,8 +1,7 @@
-package com.example.simple_board.member.service;
+package com.example.simple_board.member.auth;
 
 import com.example.simple_board.member.domain.Member;
 import com.example.simple_board.member.domain.Status;
-import com.example.simple_board.member.dto.LoginRequest;
 import com.example.simple_board.member.dto.LoginResponse;
 import com.example.simple_board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public LoginResponse login(String email, String rawPassword) {
+    public LoginResponse loginSession(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다."));
 
@@ -42,5 +41,17 @@ public class AuthService {
         }
 
         return new LoginResponse(member.getId(), member.getNickname(), member.getRole().name());
+    }
+
+    @Transactional(readOnly = true)
+    public Long loginJwt(String email, String rawPassword) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthException("이메일 또는 비밀번호가 올바르지 않습니다."));
+
+        if (!passwordEncoder.matches(rawPassword, member.getPasswordHash())) {
+            throw new AuthException("이메일 또는 비밀번호가 올바르지 않습니다.");
+        }
+
+        return member.getId();
     }
 }

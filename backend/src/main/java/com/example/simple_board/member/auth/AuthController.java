@@ -1,18 +1,17 @@
-package com.example.simple_board.member.controller;
+package com.example.simple_board.member.auth;
 
+import com.example.simple_board.member.auth.dto.LoginResponseJwt;
 import com.example.simple_board.member.domain.Member;
 import com.example.simple_board.member.dto.LoginRequest;
 import com.example.simple_board.member.dto.LoginResponse;
 import com.example.simple_board.member.dto.SignupRequest;
 import com.example.simple_board.member.dto.SignupResponse;
-import com.example.simple_board.member.service.AuthService;
-import jakarta.servlet.http.HttpSession;
+import com.example.simple_board.security.jwt.JwtProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +19,8 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final JwtProvider jwtProvider;
 
     private static final String SESSION_MEMBER_ID = "MEMBER_ID"; // 세션 상수
     // 회원 가입
@@ -30,11 +31,24 @@ public class AuthController {
         return new SignupResponse(m.getId(), m.getEmail(), m.getNickname());
     }
 
-    // 로그인
-    @PostMapping("/login")
+    // 세션 로그인
+    /*@PostMapping("/login")
     public LoginResponse login(@RequestBody @Valid LoginRequest req, HttpSession session){
-        LoginResponse res = authService.login(req.email(), req.password());
+        LoginResponse res = authService.loginSession(req.email(), req.password());
         session.setAttribute(SESSION_MEMBER_ID, res.memberId());
         return res;
+    }*/
+
+    // jwt 로그인
+    @PostMapping("/login")
+    public LoginResponseJwt login(@RequestBody LoginRequest req) {
+        Long memberId = authService.loginJwt(req.email(), req.password()); // 성공하면 id 반환하게
+        String token = jwtProvider.createAccessToken(memberId);
+        return new LoginResponseJwt(memberId, token);
+    }
+
+    @GetMapping("/me")
+    public String me(@AuthenticationPrincipal Long memberId) {
+        return "id=" + memberId;
     }
 }
