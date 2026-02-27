@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { login } from '../../../entities/member/api/auth'
+import type { LoginResult } from '../../../entities/member/model/types'
 
 function getErrorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback
@@ -8,6 +9,20 @@ function getErrorMessage(error: unknown, fallback: string) {
 
 function validateEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function getDisplayName(result: LoginResult, fallbackEmail: string) {
+  if ('nickname' in result && typeof result.nickname === 'string' && result.nickname.trim()) {
+    return result.nickname
+  }
+  return fallbackEmail
+}
+
+function getRoleLabel(result: LoginResult) {
+  if ('role' in result && typeof result.role === 'string' && result.role.trim()) {
+    return ` (${result.role})`
+  }
+  return ''
 }
 
 export function useLoginForm() {
@@ -42,7 +57,9 @@ export function useLoginForm() {
         password,
       })
 
-      setSuccess(`${result.nickname}님 로그인되었습니다. (${result.role})`)
+      const displayName = getDisplayName(result, trimmedEmail)
+      const roleLabel = getRoleLabel(result)
+      setSuccess(`${displayName}님 로그인되었습니다.${roleLabel}`)
       setPassword('')
     } catch (e) {
       setError(getErrorMessage(e, '로그인에 실패했습니다.'))

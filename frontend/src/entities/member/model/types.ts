@@ -15,8 +15,17 @@ export type LoginPayload = {
   password: string
 }
 
-export type LoginResult = {
+export type SessionLoginResult = {
   memberId: number
   nickname: string
   role: string
 }
+
+export type JwtLoginResult = {
+  memberId: number
+  accessToken: string
+  nickname?: string
+  role?: string
+}
+
+export type LoginResult = SessionLoginResult | JwtLoginResult
