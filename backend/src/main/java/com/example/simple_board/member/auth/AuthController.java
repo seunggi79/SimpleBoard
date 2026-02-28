@@ -49,6 +49,6 @@ public class AuthController {
 
     @GetMapping("/me")
     public String me(@AuthenticationPrincipal Long memberId) {
-        return "id=" + memberId;
+        return "id = " + memberId;
     }
 }
