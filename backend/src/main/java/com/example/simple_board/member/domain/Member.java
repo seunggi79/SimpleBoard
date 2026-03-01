@@ -35,6 +35,20 @@ public class Member {
         this.email = email;
         this.nickname = nickname;
         this.passwordHash = passwordHash;
+        this.role = Role.USER;
+        this.status = Status.ACTIVE;
+    }
+
+    public void changeRole(Role role) {
+        this.role = role;
+    }
+
+    public void block() {
+        this.status = Status.BLOCKED;
+    }
+
+    public void activate() {
+        this.status = Status.ACTIVE;
     }
 
 }

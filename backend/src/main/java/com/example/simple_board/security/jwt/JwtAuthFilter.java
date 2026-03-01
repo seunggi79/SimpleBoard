@@ -4,7 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,24 +26,44 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        String auth = req.getHeader("Authorization");
+        // 이미 인증이 있으면 중복 세팅하지 않음
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            chain.doFilter(req, res);
+            return;
+        }
+
+        String auth = req.getHeader(HttpHeaders.AUTHORIZATION);
         System.out.println("[JwtAuthFilter] uri=" + req.getRequestURI() + " auth=" + auth);
 
-        if (auth != null && auth.startsWith("Bearer ")) {
-            String token = auth.substring(7);
-
-            if (jwtProvider.validate(token)) {
-                Long memberId = jwtProvider.getMemberId(token);
-
-                System.out.println("[JwtAuthFilter] OK memberId=" + memberId);
-
-                var authentication =
-                        new UsernamePasswordAuthenticationToken(memberId, null, List.of());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                System.out.println("[JwtAuthFilter] INVALID token");
-            }
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            chain.doFilter(req, res);
+            return;
         }
+
+        String token = auth.substring(7).trim();
+
+        boolean ok = jwtProvider.validate(token);
+        System.out.println("[JwtAuthFilter] validate=" + ok);
+
+        if (!ok) {
+            chain.doFilter(req, res);
+            return;
+        }
+
+        Long memberId = jwtProvider.getMemberId(token);
+        String role = jwtProvider.getRole(token); // ROLE_USER / ROLE_ADMIN
+
+        System.out.println("[JwtAuthFilter] OK memberId=" + memberId + " role=" + role);
+
+        List<SimpleGrantedAuthority> authorities =
+                (role == null || role.isBlank())
+                        ? List.of()
+                        : List.of(new SimpleGrantedAuthority(role));
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(new AuthPrincipal(memberId), null, authorities);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         chain.doFilter(req, res);
     }

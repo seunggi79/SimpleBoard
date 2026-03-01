@@ -43,8 +43,9 @@ public class AuthService {
         return new LoginResponse(member.getId(), member.getNickname(), member.getRole().name());
     }
 
+    // ✅ 변경: JWT 로그인도 role이 필요하니 Member 자체를 반환
     @Transactional(readOnly = true)
-    public Long loginJwt(String email, String rawPassword) {
+    public Member loginJwt(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new AuthException("이메일 또는 비밀번호가 올바르지 않습니다."));
 
@@ -52,6 +53,11 @@ public class AuthService {
             throw new AuthException("이메일 또는 비밀번호가 올바르지 않습니다.");
         }
 
-        return member.getId();
+        // ✅ 추가: JWT 로그인도 상태 체크는 반드시 (차단계정 토큰 발급 방지)
+        if (member.getStatus() != Status.ACTIVE) {
+            throw new AuthException("계정이 비활성/차단 상태입니다.");
+        }
+
+        return member;
     }
 }

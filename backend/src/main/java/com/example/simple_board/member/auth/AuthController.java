@@ -6,6 +6,7 @@ import com.example.simple_board.member.dto.LoginRequest;
 import com.example.simple_board.member.dto.LoginResponse;
 import com.example.simple_board.member.dto.SignupRequest;
 import com.example.simple_board.member.dto.SignupResponse;
+import com.example.simple_board.security.jwt.AuthPrincipal;
 import com.example.simple_board.security.jwt.JwtProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,14 +42,14 @@ public class AuthController {
 
     // jwt 로그인
     @PostMapping("/login")
-    public LoginResponseJwt login(@RequestBody LoginRequest req) {
-        Long memberId = authService.loginJwt(req.email(), req.password()); // 성공하면 id 반환하게
-        String token = jwtProvider.createAccessToken(memberId);
-        return new LoginResponseJwt(memberId, token);
+    public LoginResponseJwt login(@RequestBody @Valid LoginRequest req) {
+        Member m = authService.loginJwt(req.email(), req.password()); // ✅ Member 반환
+        String token = jwtProvider.createAccessToken(m.getId(), m.getRole().asAuthority()); // ✅ role 포함
+        return new LoginResponseJwt(m.getId(), token);
     }
 
     @GetMapping("/me")
-    public String me(@AuthenticationPrincipal Long memberId) {
-        return "id = " + memberId;
+    public String me(@AuthenticationPrincipal AuthPrincipal principal) {
+        return principal == null ? "anonymous" : "id = " + principal.memberId();
     }
 }
